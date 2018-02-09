@@ -101,3 +101,5 @@ source $ZSH/oh-my-zsh.sh
 
 # fortune: brew install fortune ponysay
 fortune | ponysay
+
+alias mw="cd /mnt/c/Users/Mason"
