@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Connect to my ut psql instance
+function utpsql() {
+  psql "sslmode=disable dbname=$1 user=postgres hostaddr=35.224.223.225"
+}
+
 # Create a new directory and enter it
 function md() {
   mkdir -p "$@" && cd "$@"
