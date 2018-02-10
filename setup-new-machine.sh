@@ -142,6 +142,11 @@ ln -s /Applications/Atom.app/Contents/Resources/app/atom.sh /usr/local/bin/atom
 
 sh osx/set-defaults.sh
 
+###############################################################################
+# Install Powerline                                                           #
+###############################################################################
+
+pip install --user git+git://github.com/Lokaltog/powerline
 
 ###############################################################################
 # Symlinks to link dotfiles into ~/                                           #

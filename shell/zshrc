@@ -21,6 +21,10 @@ dirs_to_prepend=(
 # Explicitly configured $PATH
 PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
+if [ -d "$HOME/.local/bin" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
 for dir in ${(k)dirs_to_prepend[@]}
 do
   if [ -d ${dir} ]; then
