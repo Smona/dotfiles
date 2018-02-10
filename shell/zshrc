@@ -37,7 +37,7 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="nick"
+ZSH_THEME="af-magic"
 
 # Z beats cd most of the time
 . ~/z/z.sh
@@ -103,3 +103,4 @@ source $ZSH/oh-my-zsh.sh
 fortune | ponysay
 
 alias mw="cd /mnt/c/Users/Mason"
+alias school="cd /mnt/d/MEGA/School"
