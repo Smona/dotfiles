@@ -66,10 +66,15 @@ COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=$HOME/dotfiles/zsh
 
+# Install custom plugins
+if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+fi
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(fabric brew node npm history git-flow vagrant zsh-syntax-highlighting)
+plugins=(fabric brew node npm history git-flow vagrant zsh-syntax-highlighting zsh-autosuggestions)
 
 # User configuration
 
