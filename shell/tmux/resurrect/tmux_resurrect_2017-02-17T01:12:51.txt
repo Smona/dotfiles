@@ -1,0 +1,8 @@
+pane	smona	0	:TPR	0	:-	0	:/Users/Mason/projects/political-revolution.com	1	zsh	:
+pane	smona	1	:CS313E	1	:*	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	1	vim	:vi Blackjack.py
+pane	smona	1	:CS313E	1	:*	1	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	0	zsh	:bash /Users/Mason/.tmux/plugins/tmux-resurrect/scripts/save.sh
+pane	smona	2	:zsh	0	:	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code	1	zsh	:
+window	smona	0	0	:-	b5be,158x51,0,0,1
+window	smona	1	1	:*	ff63,158x51,0,0[158x33,0,0,2,158x17,0,34,5]
+window	smona	2	0	:	b5c0,158x51,0,0,3
+state	smona	

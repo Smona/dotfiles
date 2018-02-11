@@ -1,0 +1,3 @@
+pane	smona	0	:zsh	1	:*	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	1	zsh	:
+window	smona	0	1	:*	b1bd,158x50,0,0,0
+state	smona	
