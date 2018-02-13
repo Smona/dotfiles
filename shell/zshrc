@@ -44,6 +44,8 @@ export PATH
 POWERLEVEL9K_MODE='awesome-patched'
 DEFAULT_USER='smona'
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(public_ip context dir rbenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs battery time)
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Z beats cd most of the time
