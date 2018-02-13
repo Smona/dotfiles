@@ -151,6 +151,10 @@ echo -n "Creating $dir_backup for backup of any existing dotfiles in ~..."
 mkdir -p $dir_backup
 echo "done"
 
+# Install Oh My Zsh
+echo -n "Installing the latest Oh My Zsh..."
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
 # Change to the dotfiles directory
 echo -n "Changing to the $dir directory..."
 cd $dir
@@ -334,6 +338,13 @@ main
 # Install Zsh settings
 ln -s ~/dotfiles/zsh/themes/nick.zsh-theme $HOME/.oh-my-zsh/themes
 
+# Install Latest z.sh
+if ! [ -d ~/z ]; then
+  mkdir ~/z
+  cd ~/z
+fi
+# Using fork that suppresses WSL error on each command
+wget -O ~/z/z.sh https://github.com/Kerren/z/raw/master/z.sh
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
