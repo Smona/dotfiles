@@ -16,6 +16,7 @@ alias g="git"
 alias v="vim"
 alias gh="github"
 alias rm="trash"
+alias C="Code.exe"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
 
