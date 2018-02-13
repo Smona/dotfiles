@@ -41,7 +41,10 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+POWERLEVEL9K_MODE='awesome-patched'
+DEFAULT_USER='smona'
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Z beats cd most of the time
 . ~/z/z.sh
