@@ -75,6 +75,8 @@ unset file;
 #   ------------------------------------------------------------
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
+# Set up support for x11
+export DISPLAY=:0
 
 
 #   -----------------------------
