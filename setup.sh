@@ -154,6 +154,8 @@ echo "done"
 # Install Oh My Zsh
 echo -n "Installing the latest Oh My Zsh..."
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+# Install PowerLevel9K Theme
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 # Change to the dotfiles directory
 echo -n "Changing to the $dir directory..."
