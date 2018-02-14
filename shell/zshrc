@@ -14,7 +14,7 @@ dirs_to_prepend=(
   "$HOME/bin"
   "$HOME/.rvm/bin"
 #  "$(brew --prefix ruby)/bin"
-#  "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
+  "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
   "$(npm prefix -g)/share/npm/bin" # Add npm-installed package bin
 )
 
@@ -41,7 +41,7 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-POWERLEVEL9K_MODE='awesome-patched'
+POWERLEVEL9K_MODE='nerdfont-complete'
 DEFAULT_USER='smona'
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(public_ip context root_indicator dir rbenv vcs)
@@ -74,11 +74,6 @@ COMPLETION_WAITING_DOTS="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=$HOME/dotfiles/zsh
-
-# Install custom plugins
-if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
-fi
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/

@@ -153,9 +153,14 @@ echo "done"
 
 # Install Oh My Zsh
 echo -n "Installing the latest Oh My Zsh..."
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Install PowerLevel9K Theme
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# Install custom plugins
+if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+fi
+
 
 # Change to the dotfiles directory
 echo -n "Changing to the $dir directory..."
@@ -338,7 +343,6 @@ main
 ###############################################################################
 
 # Install Zsh settings
-ln -s ~/dotfiles/zsh/themes/nick.zsh-theme $HOME/.oh-my-zsh/themes
 
 # Install Latest z.sh
 if ! [ -d ~/z ]; then
@@ -346,7 +350,7 @@ if ! [ -d ~/z ]; then
   cd ~/z
 fi
 # Using fork that suppresses WSL error on each command
-wget -O ~/z/z.sh https://github.com/Kerren/z/raw/master/z.sh
+curl "https://github.com/rupa/z/raw/master/z.sh" > $HOME/z/z.sh 
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
