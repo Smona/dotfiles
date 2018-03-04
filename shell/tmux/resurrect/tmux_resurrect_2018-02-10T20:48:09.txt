@@ -1,7 +1,0 @@
-pane	0	0	:zsh	1	:*	0	:/Users/Mason	1	zsh	:
-pane	1	0	:zsh	1	:*	0	:/Users/Mason/dotfiles	1	zsh	:
-pane	2	0	:zsh	1	:*	0	:/Users/Mason/dotfiles	1	zsh	:
-window	0	0	1	:*	b1bd,158x50,0,0,0
-window	1	0	1	:*	b1be,158x50,0,0,1
-window	2	0	1	:*	b1bf,158x50,0,0,2
-state	2	

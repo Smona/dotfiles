@@ -1,7 +1,0 @@
-pane	0	0	:zsh	0	:	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	1	zsh	:
-pane	0	1	:zsh	0	:-	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	1	zsh	:
-pane	0	2	:zsh	1	:*	0	:/Users/Mason/MEGAsync/School/Senior/Spring/Software Design/Class Code/Assignments	1	zsh	:
-window	0	0	0	:	b1bd,158x50,0,0,0
-window	0	1	0	:-	b1be,158x50,0,0,1
-window	0	2	1	:*	b1bf,158x50,0,0,2
-state	0	

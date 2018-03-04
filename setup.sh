@@ -196,7 +196,6 @@ declare -a FILES_TO_SYMLINK=(
   'shell/screenrc'
   'shell/vimrc'
   'shell/tmux.conf'
-  'shell/tmux'
 
   'git/gitattributes'
   'git/gitconfig'
@@ -349,8 +348,12 @@ if ! [ -d ~/z ]; then
   mkdir ~/z
   cd ~/z
 fi
+
 # Using fork that suppresses WSL error on each command
-curl "https://github.com/rupa/z/raw/master/z.sh" > $HOME/z/z.sh 
+curl "https://github.com/Kerren/z/raw/master/z.sh" > $HOME/z/z.sh 
+
+# Install Powerline
+pip install --user powerline-status
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
@@ -367,3 +370,11 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Reload zsh settings
 source ~/.zshrc
+
+###############################################################################
+# Tmux                                                                        #
+###############################################################################
+
+# Install TPM
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
