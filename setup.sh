@@ -323,6 +323,9 @@ install_zsh () {
     # . "$DOTFILES_DIR/install/brew-cask.sh"
 # fi
 
+# Install Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
 main
 # install_zsh
 
@@ -350,7 +353,7 @@ if ! [ -d ~/z ]; then
 fi
 
 # Using fork that suppresses WSL error on each command
-curl "https://github.com/Kerren/z/raw/master/z.sh" > $HOME/z/z.sh 
+curl "https://github.com/Kerren/z/raw/master/z.sh" > $HOME/z/z.sh
 
 # Install Powerline
 pip install --user powerline-status
