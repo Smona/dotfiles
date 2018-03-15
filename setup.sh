@@ -151,16 +151,6 @@ echo -n "Creating $dir_backup for backup of any existing dotfiles in ~..."
 mkdir -p $dir_backup
 echo "done"
 
-# Install Oh My Zsh
-echo -n "Installing the latest Oh My Zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# Install PowerLevel9K Theme
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-# Install custom plugins
-if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
-fi
-
 
 # Change to the dotfiles directory
 echo -n "Changing to the $dir directory..."
@@ -170,14 +160,6 @@ echo "done"
 #
 # Actual symlink stuff
 #
-
-
-# Atom editor settings
-echo -n "Copying Atom settings.."
-mv -f ~/.atom ~/dotfiles_old/
-ln -s $HOME/dotfiles/atom ~/.atom
-echo "done"
-
 
 declare -a FILES_TO_SYMLINK=(
 
@@ -196,6 +178,7 @@ declare -a FILES_TO_SYMLINK=(
   'shell/screenrc'
   'shell/vimrc'
   'shell/tmux.conf'
+  'shell/zpreztorc'
 
   'git/gitattributes'
   'git/gitconfig'
@@ -284,10 +267,20 @@ main() {
 install_zsh () {
   # Test to see if zshell is installed.  If it is:
   if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
-    # Install Oh My Zsh if it isn't already present
-    if [[ ! -d $dir/oh-my-zsh/ ]]; then
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    # Install Prezto if it isn't already present
+    if [[ ! -d ~/.zprezto ]]; then
+      echo -n "Installing the latest Prezto..."
+      git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
     fi
+
+    # Install PowerLevel9K Theme
+    git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
+    ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
+    # Install custom plugins
+    #if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
+    #  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+    #fi
+
     # Set the default shell to zsh if it isn't currently set to zsh
     if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
       chsh -s $(which zsh)
@@ -327,7 +320,7 @@ install_zsh () {
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 main
-# install_zsh
+install_zsh
 
 ###############################################################################
 # Atom                                                                        #
@@ -365,8 +358,9 @@ pip install --user powerline-status
 # Only use UTF-8 in Terminal.app
 defaults write com.apple.terminal StringEncodings -array 4
 
-# Install the Solarized Dark theme for iTerm
-open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
+# Install iterm themes
+# open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
+open "${HOME}/dotfiles/iterm/themes/space-vim-dark.itermcolors"
 
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false

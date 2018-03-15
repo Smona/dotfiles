@@ -20,6 +20,7 @@ alias C="Code.exe"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
 alias tmux='tmux -u'
+alias tma='tmux attach -d -t'
 
 # Easier navigation: .., ..., ~ and -
 alias ..="cd .."

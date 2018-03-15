@@ -4,9 +4,6 @@ export VISUAL=/usr/bin/vim
 export EDITOR="$VISUAL"
 export LS_COLORS='ow=01;36;40'  # Fixes ls directory coloring
 
-# Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.oh-my-zsh
-
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
@@ -14,6 +11,7 @@ dirs_to_prepend=(
   "/usr/local/sbin"
   "/usr/local/git/bin"
   "/usr/local/"
+  "/usr/local/opt/coreutils/libexec/gnubin"
 #  "/usr/local/mysql/bin"
 #  "/sw/bin/"
 #  "$HOME/dotfiles/bin"
@@ -50,11 +48,10 @@ export PATH
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 POWERLEVEL9K_MODE='nerdfont-complete'
-DEFAULT_USER='smona'
+#DEFAULT_USER='smona'
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(public_ip context root_indicator dir rbenv vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context root_indicator dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs battery time)
-ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Z beats cd most of the time
 . ~/z/z.sh
@@ -108,8 +105,6 @@ auto-ls () {
 }
 chpwd_functions=( auto-ls $chpwd_functions )
 
- source $ZSH/oh-my-zsh.sh
-
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
@@ -119,6 +114,7 @@ chpwd_functions=( auto-ls $chpwd_functions )
 # fortune: brew install fortune ponysay
 # fortune | ponysay
 
-alias ls="ls"
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# Source Prezto.
+source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+

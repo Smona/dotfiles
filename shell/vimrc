@@ -23,6 +23,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'liuchengxu/space-vim-dark'
+Plugin 'ryanoasis/vim-devicons'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -37,7 +38,7 @@ filetype plugin indent on    " required
 " OTHER SETTINGS
 :let mapleader = "-"
 map <C-n> :NERDTreeToggle<CR>
-"let g:NERDTreeDirArrows=0
+let g:NERDTreeDirArrows=0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 colorscheme space-vim-dark
@@ -51,14 +52,14 @@ let g:ale_fixers = {
 \   'javascript': ['prettier-eslint'],
 \}
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_cmd = ':CtrlPMRU'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 set encoding=utf-8
 set notermguicolors
 set autoindent
-syntax enable   " enable syntax processing
+syntax on   " enable syntax processing
 set number  "enable line numbers
 set cursorline          " highlight current line
 set showcmd     " show partial command
