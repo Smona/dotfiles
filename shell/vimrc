@@ -24,6 +24,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'kshenoy/vim-signature'          " marks plugin
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -36,6 +37,10 @@ filetype plugin indent on    " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
 " OTHER SETTINGS
+
+let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
+autocmd BufEnter * silent! lcd %:p:h " automatically cds to whatever buffer i'm in
+
 :let mapleader = "-"
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
