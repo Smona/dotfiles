@@ -4,6 +4,11 @@
 echo "Do not run this script in one go. Hit Ctrl-C NOW"
 read -n 1
 
+# Ubuntu
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python3-pip
+
 ###############################################################################
 # Backup old machine's dotfiles                                               #
 ###############################################################################
@@ -94,7 +99,8 @@ $HOME/dotfiles/install/npm.sh
 npm install -g git-open
 # trash as the safe `rm` alternative
 npm install -g trash-cli
-
+# fancy git difftool, mapped to 'gd'
+npm install -g diff-so-fancy
 
 ###############################################################################
 # Git                                                                         #

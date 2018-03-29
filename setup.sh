@@ -316,6 +316,7 @@ install_zsh () {
     # . "$DOTFILES_DIR/install/brew-cask.sh"
 # fi
 
+
 # Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
@@ -374,4 +375,11 @@ source ~/.zshrc
 
 # Install TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# Install Node
+git clone https://github.com/creationix/nvm.git ~/.nvm
+cd ~/.nvm
+git checkout v0.33.8
+. nvm.sh
+nvm install node
 

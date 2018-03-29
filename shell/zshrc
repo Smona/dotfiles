@@ -48,7 +48,7 @@ export PATH
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 POWERLEVEL9K_MODE='nerdfont-complete'
-#DEFAULT_USER='smona'
+DEFAULT_USER='smona'
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context root_indicator dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs battery time)
@@ -107,6 +107,11 @@ chpwd_functions=( auto-ls $chpwd_functions )
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # npm tab completion
 . <(npm completion)
