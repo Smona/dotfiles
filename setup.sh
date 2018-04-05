@@ -340,15 +340,6 @@ install_zsh
 
 # Install Zsh settings
 
-# Install Latest z.sh
-if ! [ -d ~/z ]; then
-  mkdir ~/z
-  cd ~/z
-fi
-
-# Using fork that suppresses WSL error on each command
-curl "https://github.com/Kerren/z/raw/master/z.sh" > $HOME/z/z.sh
-
 # Install Powerline
 pip install --user powerline-status
 

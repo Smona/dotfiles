@@ -45,8 +45,6 @@ brew upgrade --all
 
 apps=(
     rvm
-    nvm
-    mongodb
     bash-completion2
     coreutils
     moreutils
@@ -55,23 +53,23 @@ apps=(
     fortune
     ponysay
     git
-    git-extras
-    hub
+    #git-extras
+    #hub
     gnu-sed --with-default-names
     grep --with-default-names
     homebrew/completions/brew-cask-completion
     homebrew/dupes/grep
     homebrew/dupes/openssh
-    mtr
-    autojump
+    #mtr
+    fasd
     imagemagick --with-webp
     python
-    source-highlight
-    the_silver_searcher
+    #source-highlight
+    #the_silver_searcher
     tree
     ffmpeg --with-libvpx
     wget
-    wifi-password
+    #wifi-password
 )
 
 brew install "${apps[@]}"

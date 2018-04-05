@@ -32,11 +32,12 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'fasd' \
   'osx' \
   'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions' \
-  'prompt' 
+  'prompt'
 #
 # Autosuggestions
 #
@@ -59,14 +60,14 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
 #
 
 # Set the command prefix on non-GNU systems.
-# zstyle ':prezto:module:gnu-utility' prefix 'g'
+zstyle ':prezto:module:gnu-utility' prefix 'g'
 
 #
 # History Substring Search
