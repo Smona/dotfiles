@@ -25,6 +25,11 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'kshenoy/vim-signature'          " marks plugin
+Plugin 'gfontenot/vim-xcode'
+Plugin 'keith/swift.vim'
+Plugin 'digitaltoad/vim-pug'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -39,11 +44,9 @@ filetype plugin indent on    " required
 " OTHER SETTINGS
 
 let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
-autocmd BufEnter * silent! lcd %:p:h " automatically cds to whatever buffer i'm in
+"autocmd BufEnter * silent! lcd %:p:h " automatically cds to whatever buffer i'm in
 
 :let mapleader = "-"
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrows=0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 colorscheme space-vim-dark
@@ -60,6 +63,31 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = ':CtrlPMRU'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+
+""" -------------------- NERDTree CONFIG -------------------------
+" nerd tree opens files in different tabs
+" let g:NERDTreeMapOpenInTab='<ENTER>'
+
+" start NERDTree automatically on startup
+" autocmd vimenter * NERDTree
+
+map <C-n> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrows=0
+let g:NERDTreeWinSize=50
+
+" if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
+function! OpenNERDTree()
+    if exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+        NERDTreeToggle
+    else
+        " finds currently open file in NERDTree
+        NERDTreeFind
+    endif
+endfunction
+
+" reload file if changed when changing buffers
+au FocusGained,BufEnter * :checktime
 
 set encoding=utf-8
 set notermguicolors
@@ -119,3 +147,9 @@ nmap <leader>h :bprevious<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Automatically reload vimrc
+augroup myvimrchooks
+    au!
+    autocmd bufwritepost .vimrc source ~/.vimrc
+augroup END
