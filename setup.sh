@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # https://github.com/kaicataldo/dotfiles/blob/master/bin/install.sh
 
@@ -266,26 +266,7 @@ main() {
 
 install_zsh () {
   # Test to see if zshell is installed.  If it is:
-  if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
-    # Install Prezto if it isn't already present
-    if [[ ! -d ~/.zprezto ]]; then
-      echo -n "Installing the latest Prezto..."
-      git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-    fi
-
-    # Install PowerLevel9K Theme
-    git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
-    ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
-    # Install custom plugins
-    #if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
-    #  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
-    #fi
-
-    # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-      chsh -s $(which zsh)
-    fi
-  else
+  if [ ! -f /bin/zsh -o ! -f /usr/bin/zsh ]; then
     # If zsh isn't installed, get the platform of the current machine
     platform=$(uname);
     # If the platform is Linux, try an apt-get to install zsh and then recurse
@@ -305,6 +286,27 @@ install_zsh () {
       exit
     fi
   fi
+
+  # Install Prezto if it isn't already present
+  if [[ ! -d ~/.zprezto ]]; then
+    echo -n "Installing the latest Prezto..."
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+  fi
+
+  # Install PowerLevel9K Theme
+  if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
+    git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
+    ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
+  fi
+  # Install custom plugins
+  #if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
+  #  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+  #fi
+
+  # Set the default shell to zsh if it isn't currently set to zsh
+  if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+    chsh -s $(which zsh)
+  fi
 }
 
 # Package managers & packages
@@ -321,7 +323,7 @@ install_zsh () {
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 main
-install_zsh
+#install_zsh
 
 ###############################################################################
 # Atom                                                                        #
@@ -346,16 +348,17 @@ pip install --user powerline-status
 ###############################################################################
 # Terminal & iTerm 2                                                          #
 ###############################################################################
+if [[ $(uname) == "Darwin" ]]; then
+  # Only use UTF-8 in Terminal.app
+  defaults write com.apple.terminal StringEncodings -array 4
 
-# Only use UTF-8 in Terminal.app
-defaults write com.apple.terminal StringEncodings -array 4
+  # Install iterm themes
+  # open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
+  open "${HOME}/dotfiles/iterm/themes/space-vim-dark.itermcolors"
 
-# Install iterm themes
-# open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
-open "${HOME}/dotfiles/iterm/themes/space-vim-dark.itermcolors"
-
-# Don’t display the annoying prompt when quitting iTerm
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+  # Don’t display the annoying prompt when quitting iTerm
+  defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+fi
 
 # Reload zsh settings
 source ~/.zshrc
