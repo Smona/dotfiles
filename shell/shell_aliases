@@ -144,7 +144,7 @@ alias gws='git diff --shortstat "@{0 day ago}"' # how many lines of code you hav
 alias gwts='git ls-files | xargs wc -l' # count number of lines of code in a git project
 alias ggmp='git checkout -' # jump back to to your last branch
 alias gst='git stash' # stash git changes and put them into your list
-alias gdtp='git stash pop' # bring back your changes, but it removes them from your stash
+alias gstp='git stash pop' # bring back your changes, but it removes them from your stash
 alias gchp='git cherry-pick' # cherry pick the committed code in your own branch (gchp [hash])
 alias gcln='git clean -xfd' # remove untracked files
 
