@@ -287,17 +287,6 @@ install_zsh () {
     fi
   fi
 
-  # Install Prezto if it isn't already present
-  if [[ ! -d ~/.zprezto ]]; then
-    echo -n "Installing the latest Prezto..."
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-  fi
-
-  # Install PowerLevel9K Theme
-  if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
-    git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
-    ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
-  fi
   # Install custom plugins
   #if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
   #  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
@@ -308,6 +297,18 @@ install_zsh () {
     chsh -s $(which zsh)
   fi
 }
+
+# Install Prezto if it isn't already present
+if [[ ! -d ~/.zprezto ]]; then
+  echo -n "Installing the latest Prezto..."
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+fi
+
+# Install PowerLevel9K Theme
+if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
+  git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
+  ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
+fi
 
 # Package managers & packages
 
