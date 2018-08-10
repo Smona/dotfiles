@@ -21,6 +21,7 @@ alias x+="chmod +x"
 alias -- +x="chmod +x"
 alias tmux='tmux -u'
 alias tma='tmux attach -d -t'
+alias tmn='tmux new -s'
 
 # Easier navigation: .., ..., ~ and -
 alias ..="cd .."
@@ -213,3 +214,5 @@ done
 # Docker
 alias dcu="docker-compose up"
 alias dcd="docker-compose down"
+alias dce="docker-compose exec"
+alias dcl="docker-compose logs -f"
