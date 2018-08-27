@@ -276,7 +276,7 @@ install_zsh () {
         install_zsh
       fi
       if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install zsh
+        sudo apt-get install zsh -y
         install_zsh
       fi
     # If the platform is OS X, tell the user to install zsh :)
@@ -298,12 +298,6 @@ install_zsh () {
   fi
 }
 
-# Install Prezto if it isn't already present
-if [[ ! -d ~/.zprezto ]]; then
-  echo -n "Installing the latest Prezto..."
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-fi
-
 # Install PowerLevel9K Theme
 if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
   git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
@@ -320,22 +314,8 @@ fi
 # fi
 
 
-# Install Vundle
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
 main
-#install_zsh
-
-###############################################################################
-# Atom                                                                        #
-###############################################################################
-
-# Copy over Atom configs
-#cp -r atom/packages.list $HOME/.atom
-
-# Install community packages
-#apm list --installed --bare - get a list of installed packages
-#apm install --packages-file $HOME/.atom/packages.list
+sudo apt install -y git
 
 ###############################################################################
 # Zsh                                                                         #
@@ -343,8 +323,14 @@ main
 
 # Install Zsh settings
 
-# Install Powerline
-pip install --user powerline-status
+install_zsh
+
+# Install Prezto if it isn't already present
+if [[ ! -d ~/.zprezto ]]; then
+  echo -n "Installing the latest Prezto..."
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+fi
+
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
@@ -369,12 +355,19 @@ source ~/.zshrc
 ###############################################################################
 
 # Install TPM
+sudo apt install tmux -y
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install Node
-git clone https://github.com/creationix/nvm.git ~/.nvm
-cd ~/.nvm
-git checkout v0.33.8
-. nvm.sh
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 nvm install node
+
+###############################################################################
+# Vim                                                                         #
+###############################################################################
+
+sudo apt install vim -y
+
+# Install Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
