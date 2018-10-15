@@ -74,6 +74,22 @@ get_os() {
 
 }
 
+install_system_packages() {
+  platform=$(uname);
+  # If the platform is Linux, try an apt-get to install zsh and then recurse
+  if [[ $platform == 'Linux' ]]; then
+    if [[ -f /etc/redhat-release ]]; then
+      sudo yum install $1
+    fi
+    if [[ -f /etc/debian_version ]]; then
+      sudo apt install $1 -y
+    fi
+  # If the platform is OS X, tell the user to install zsh :)
+  elif [[ $platform == 'Darwin' ]]; then
+    brew install $1
+  fi
+}
+
 is_git_repository() {
   [ "$(git rev-parse &>/dev/null; printf $?)" -eq 0 ] \
     && return 0 \
@@ -132,6 +148,8 @@ while true; do
     * ) echo "Please answer yes or no.";;
   esac
 done
+
+ask_for_sudo
 
 # Get the dotfiles directory's absolute path
 SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd -P)"
@@ -273,11 +291,9 @@ install_zsh () {
     if [[ $platform == 'Linux' ]]; then
       if [[ -f /etc/redhat-release ]]; then
         sudo yum install zsh
-        install_zsh
       fi
       if [[ -f /etc/debian_version ]]; then
         sudo apt-get install zsh -y
-        install_zsh
       fi
     # If the platform is OS X, tell the user to install zsh :)
     elif [[ $platform == 'Darwin' ]]; then
@@ -287,22 +303,11 @@ install_zsh () {
     fi
   fi
 
-  # Install custom plugins
-  #if ! [ -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
-  #  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
-  #fi
-
   # Set the default shell to zsh if it isn't currently set to zsh
   if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
     chsh -s $(which zsh)
   fi
 }
-
-# Install PowerLevel9K Theme
-if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
-  git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
-  ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
-fi
 
 # Package managers & packages
 
@@ -315,13 +320,11 @@ fi
 
 
 main
-sudo apt install -y git
+install_system_packages git
 
 ###############################################################################
 # Zsh                                                                         #
 ###############################################################################
-
-# Install Zsh settings
 
 install_zsh
 
@@ -329,6 +332,12 @@ install_zsh
 if [[ ! -d ~/.zprezto ]]; then
   echo -n "Installing the latest Prezto..."
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+fi
+
+# Install PowerLevel9K Theme
+if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
+  git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
+  ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
 fi
 
 
@@ -355,18 +364,30 @@ source ~/.zshrc
 ###############################################################################
 
 # Install TPM
-sudo apt install tmux -y
+install_system_packages tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# Install Node
+###############################################################################
+# Setup languages                                                             #
+###############################################################################
+
+# Install nvm and Node
+mkdir ~/.nvm
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 nvm install node
+
+# install spaceship theme
+npm i -g spaceship-prompt
+
+# Setup python
+install_system_packages "python-pip python3-pip"
+pip install virtualenv virtualenvwrapper
 
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
 
-sudo apt install vim -y
+install_system_packages vim
 
 # Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
