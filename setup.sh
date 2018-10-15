@@ -60,7 +60,6 @@ get_answer() {
 }
 
 get_os() {
-
   declare -r OS_NAME="$(uname -s)"
   local os=""
 
@@ -71,7 +70,6 @@ get_os() {
   fi
 
   printf "%s" "$os"
-
 }
 
 install_system_packages() {
@@ -263,7 +261,7 @@ main() {
   )
 
   for i in ${BINARIES[@]}; do
-    echo "Changing access permissions for binary script :: ${i##*/}"
+    # echo "Changing access permissions for binary script :: ${i##*/}"
     chmod +rwx $HOME/bin/${i##*/}
   done
 
@@ -280,33 +278,6 @@ main() {
   crontab mycron
   rm mycron
 
-}
-
-install_zsh () {
-  # Test to see if zshell is installed.  If it is:
-  if [ ! -f /bin/zsh -o ! -f /usr/bin/zsh ]; then
-    # If zsh isn't installed, get the platform of the current machine
-    platform=$(uname);
-    # If the platform is Linux, try an apt-get to install zsh and then recurse
-    if [[ $platform == 'Linux' ]]; then
-      if [[ -f /etc/redhat-release ]]; then
-        sudo yum install zsh
-      fi
-      if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install zsh -y
-      fi
-    # If the platform is OS X, tell the user to install zsh :)
-    elif [[ $platform == 'Darwin' ]]; then
-      echo "We'll install zsh, then re-run this script!"
-      brew install zsh
-      exit
-    fi
-  fi
-
-  # Set the default shell to zsh if it isn't currently set to zsh
-  if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-    chsh -s $(which zsh)
-  fi
 }
 
 # Package managers & packages
@@ -326,7 +297,15 @@ install_system_packages git
 # Zsh                                                                         #
 ###############################################################################
 
-install_zsh
+# Test to see if zshell is installed.  If it is:
+if [ ! -f /bin/zsh -o ! -f /usr/bin/zsh ]; then
+  install_system_packages zsh
+fi
+
+# Set the default shell to zsh if it isn't currently set to zsh
+if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+  chsh -s $(which zsh)
+fi
 
 # Install Prezto if it isn't already present
 if [[ ! -d ~/.zprezto ]]; then
@@ -335,10 +314,10 @@ if [[ ! -d ~/.zprezto ]]; then
 fi
 
 # Install PowerLevel9K Theme
-if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
-  git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
-  ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
-fi
+#if [ ! -d ~/.zprezto/modules/prompt/external/powerlevel9k ]; then
+#  git clone https://github.com/bhilburn/powerlevel9k.git  ~/.zprezto/modules/prompt/external/powerlevel9k
+#  ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_powerlevel9k_setup
+#fi
 
 
 ###############################################################################

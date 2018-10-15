@@ -9,16 +9,17 @@ dirs_to_prepend=(
   "/usr/local/git/bin"
   "/usr/local/"
   "/usr/local/opt/coreutils/libexec/gnubin"
-#  "/usr/local/mysql/bin"
-#  "/sw/bin/"
+  "/usr/local/mysql/bin"
+  "/sw/bin/"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
   "$HOME/.rvm/bin"
   "$HOME/.yarn/bin"
   "$HOME/.config/yarn/global/node_modules/.bin"
-#  "$(brew --prefix ruby)/bin"
-#  "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
-#  "$(npm prefix -g)/share/npm/bin" # Add npm-installed package bin
+  #"$(brew --prefix ruby)/bin"
+  #"$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
+  "$(npm prefix -g)/share/npm/bin" # Add npm-installed package bin
+  "/home/mason/miniconda3/bin"
 )
 
 # Explicitly configured $PATH
@@ -31,7 +32,7 @@ fi
 for dir in ${(k)dirs_to_prepend[@]}
 do
   if [ -d ${dir} ]; then
-    # If these directories exist, then prepend them to existing PATH
+   # If these directories exist, then prepend them to existing PATH
     PATH="${dir}:$PATH"
   fi
 done
@@ -39,16 +40,6 @@ done
 unset dirs_to_prepend
 
 export PATH
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-POWERLEVEL9K_MODE='nerdfont-complete'
-DEFAULT_USER='smona'
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context root_indicator dir vcs nvm)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs battery time)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -74,11 +65,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs battery time)
 ## Would you like to use another custom folder than $ZSH/custom?
 ## ZSH_CUSTOM=$HOME/dotfiles/zsh
 #
-## Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-## Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-## Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(brew node npm history git-flow zsh-syntax-highlighting zsh-autosuggestions)
-#
 ## User configuration
 #
 ## Load the shell dotfiles
@@ -87,9 +73,9 @@ for file in $HOME/.{shell_exports,shell_aliases,shell_functions,shell_config}; d
 done;
 unset file;
 
-#if command -v "brew" && [ -f `brew --prefix`/etc/bash_completion ]; then
-#  . `brew --prefix`/etc/bash_completion
-#fi
+if command -v "brew" && [ -f `brew --prefix`/etc/bash_completion ]; then
+  . `brew --prefix`/etc/bash_completion
+fi
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -101,6 +87,14 @@ chpwd_functions=( auto-ls $chpwd_functions )
 
 ## Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs   # Optional
+export PROJECT_HOME=$HOME/projects      # Optional
+source "$HOME/.local/bin/virtualenvwrapper.sh"
 
 # npm tab completion
 . <(npm completion)
@@ -131,3 +125,13 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+
+# added by travis gem
+[ -f /home/smona/.travis/travis.sh ] && source /home/smona/.travis/travis.sh
+fpath=($fpath "/home/mason/.zfunctions")
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
+

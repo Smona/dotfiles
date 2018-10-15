@@ -6,8 +6,6 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -34,6 +32,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'EinfachToll/DidYouMean'
+Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -75,6 +74,7 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 let g:NERDTreeWinSize=50
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
 function! OpenNERDTree()
@@ -92,11 +92,14 @@ au FocusGained,BufEnter * :checktime
 set encoding=utf-8
 set notermguicolors
 set autoindent
+let python_highlight_all=1
 syntax on   " enable syntax processing
 set number  "enable line numbers
 set cursorline          " highlight current line
 set showcmd     " show partial command
 set showmatch           " highlight matching [{()}]
+set updatetime=100      " quicker updates for e.g. gitgutter
+set mouse=a             " enable mouse navigation
 
 " Indent Settings
 set tabstop=2       " number of visual spaces per TAB
@@ -110,9 +113,11 @@ set hlsearch            " highlight matches
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
-" Add powerline
-"set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
-"set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+" Easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Always show statusline
 set laststatus=2
@@ -136,6 +141,9 @@ set wildignore+=node_modules/*,bower_components/*
 
 " Buffers
 set hidden
+
+" Shortcut to run current file
+nnoremap <leader>r :!%:p<Enter>
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -174,7 +182,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:tsuquyomi_disable_quickfix = 1
