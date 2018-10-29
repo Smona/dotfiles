@@ -33,6 +33,9 @@ Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'EinfachToll/DidYouMean'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'cespare/vim-toml'
+Plugin 'cakebaker/scss-syntax.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -189,3 +192,11 @@ let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
 
 hi Normal ctermbg=NONE guibg=NONE
+
+" Automatically refresh vue syntax highlighting to make sure it works every
+" time
+autocmd FileType vue syntax sync fromstart
+
+" Refresh git gutter after commiting from fugitive
+autocmd BufWinLeave * GitGutterAll
+
