@@ -18,8 +18,9 @@ dirs_to_prepend=(
   "$HOME/.config/yarn/global/node_modules/.bin"
   #"$(brew --prefix ruby)/bin"
   #"$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
+  "/usr/local/opt/coreutils/libexec/gnubin"
   "$(npm prefix -g)/share/npm/bin" # Add npm-installed package bin
-  "/home/mason/miniconda3/bin"
+  "$HOME/miniconda3/bin"
 )
 
 # Explicitly configured $PATH
