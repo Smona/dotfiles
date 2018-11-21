@@ -77,7 +77,7 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 " start NERDTree automatically on startup
 " autocmd vimenter * NERDTree
 
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :call OpenNERDTree()<CR>
 "let g:NERDTreeDirArrows=0
 let g:NERDTreeWinSize=50
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
@@ -86,6 +86,10 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let NERDTreeHighlightCursorline = 0
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
+let g:NERDTreeSyntaxDisableDefaultExtensions = 1
+let g:NERDTreeDisableExactMatchHighlight = 1
+let g:NERDTreeDisablePatternMatchHighlight = 1
+let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py']
 
 " if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
 function! OpenNERDTree()
