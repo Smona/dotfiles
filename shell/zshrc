@@ -8,18 +8,13 @@ dirs_to_prepend=(
   "/usr/local/sbin"
   "/usr/local/git/bin"
   "/usr/local/"
-  "/usr/local/opt/coreutils/libexec/gnubin"
+  "/usr/local/opt/coreutils/libexec/gnubin" # Add brew-installed GNU core utilities bin
   "/usr/local/mysql/bin"
   "/sw/bin/"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
   "$HOME/.rvm/bin"
-  "$HOME/.yarn/bin"
-  "$HOME/.config/yarn/global/node_modules/.bin"
   #"$(brew --prefix ruby)/bin"
-  #"$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
-  "/usr/local/opt/coreutils/libexec/gnubin"
-  "$(npm prefix -g)/share/npm/bin" # Add npm-installed package bin
   "$HOME/miniconda3/bin"
 )
 
@@ -74,9 +69,9 @@ for file in $HOME/.{shell_exports,shell_aliases,shell_functions,shell_config}; d
 done;
 unset file;
 
-if command -v "brew" && [ -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
-fi
+#if command -v "brew" && [ -f `brew --prefix`/etc/bash_completion ]; then
+#  . `brew --prefix`/etc/bash_completion
+#fi
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -89,16 +84,12 @@ chpwd_functions=( auto-ls $chpwd_functions )
 ## Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
 # virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs   # Optional
-export PROJECT_HOME=$HOME/projects      # Optional
-source "$HOME/.local/bin/virtualenvwrapper.sh"
-
-# npm tab completion
-. <(npm completion)
+if [ -d  "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
+  export WORKON_HOME=$HOME/.virtualenvs   # Optional
+  export PROJECT_HOME=$HOME/projects      # Optional
+  source "$HOME/.local/bin/virtualenvwrapper.sh"
+fi
 
 # fortune: brew install fortune ponysay
 # fortune | ponysay

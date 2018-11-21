@@ -37,7 +37,8 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions' \
-  'prompt'
+  'prompt' \
+  'node'
 #
 # Autosuggestions
 #
@@ -161,7 +162,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-# zstyle ':prezto:module:tmux:auto-start' local 'yes'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
 # zstyle ':prezto:module:tmux:auto-start' remote 'yes'
