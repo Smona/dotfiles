@@ -179,7 +179,7 @@
 
 # Git mergetool
 [merge]
-        tool = opendiff
+	tool = vimdiff
 
 [core]
         editor = nano
@@ -257,3 +257,5 @@
 [user]
 	name = Mason Bourgeois
 	email = mason.bourgeois@gmail.com
+[mergetool]
+	keepBackup = false
