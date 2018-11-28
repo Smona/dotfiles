@@ -19,13 +19,13 @@ Plugin 'kshenoy/vim-signature'          " marks in gutter plugin
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'EinfachToll/DidYouMean'
 Plugin 'tpope/vim-obsession'
 Plugin 'lifepillar/vim-mucomplete'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'w0rp/ale'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -60,12 +60,8 @@ let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutte
 
 :let mapleader = "-"
 colorscheme space-vim-dark
-let g:ale_linters = {
-\   'javascript': ['eslint', 'prettier-eslint'],
-\}
-let g:ale_fixers = {
-\   'javascript': ['prettier-eslint'],
-\}
+set splitbelow
+set splitright
 
 let g:ctrlp_map = '<c-o>'
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -73,8 +69,14 @@ let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " MUComplete
-set completeopt+=menuone
+set completeopt=longest,menuone
+set completeopt+=noselect
+set completeopt+=noinsert
+let g:mucomplete#enable_auto_at_startup = 1
 set shortmess+=c   " Shut off completion messages
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript nmap <buffer> <Leader>d <C-]>
+autocmd FileType javascript nmap <buffer> <Leader>d :ALEGoToDefinition<CR>
 
 """ -------------------- NERDTree CONFIG -------------------------
 " nerd tree opens files in different tabs
@@ -95,7 +97,7 @@ let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py']
+let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py']
 
 " if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
 function! OpenNERDTree()
@@ -190,24 +192,22 @@ augroup myvimrchooks
 augroup END
 
 """"" Airline
-let g:airline_theme='violet'
+let g:airline_theme='deus'
 " let g:airline_solarized_bg='dark'
-" let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
-""""" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'vue': ['eslint', 'vls']}
+let g:ale_fixers = {
+      \ '*': ['trim_whitespace'],
+      \ 'javascript': ['eslint'], 
+      \ 'typescript': ['eslint', 'tslint'],
+      \ 'vue': ['eslint', 'trim_whitespace']}
+let g:ale_javascript_eslint_options = '--ext .js,.vue'
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+let g:javascript_plugin_jsdoc = 1
 
 hi Normal ctermbg=NONE guibg=NONE
 
