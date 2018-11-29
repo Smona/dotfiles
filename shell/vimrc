@@ -64,7 +64,7 @@ colorscheme space-vim-dark
 set splitbelow
 set splitright
 
-let g:ctrlp_map = '<c-o>'
+let g:ctrlp_map = '<Tab>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
@@ -150,7 +150,7 @@ nnoremap <C-H> <C-W><C-H>
 set laststatus=2
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
-"set t_Co=256
+set t_Co=256
 
 " Folding settings
 set foldenable          " enable folding
@@ -187,7 +187,7 @@ nmap <leader>h :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 
 nmap <C-p> :Buffers<CR>
-nmap <Tab> :GFiles<CR>
+"nmap <Tab> :GFiles<CR>
 
 " Automatically reload vimrc
 augroup myvimrchooks
@@ -203,9 +203,10 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'vue': ['eslint', 'vls']}
+let g:ale_linters = {'python': ['flake8'], 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
+      \ 'python': ['autopep8'],
       \ 'javascript': ['eslint'], 
       \ 'typescript': ['eslint', 'tslint'],
       \ 'vue': ['eslint', 'trim_whitespace']}

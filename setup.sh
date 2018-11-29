@@ -360,7 +360,7 @@ npm i -g spaceship-prompt
 
 # Setup python
 install_system_packages "python-pip python3-pip"
-pip install virtualenv virtualenvwrapper
+pip install virtualenv virtualenvwrapper autopep8 flake8
 
 ###############################################################################
 # Vim                                                                         #
