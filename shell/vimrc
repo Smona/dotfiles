@@ -40,6 +40,7 @@ Plugin 'posva/vim-vue'
 " TODO: these are both typescript plugins, should probably get rid of one
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
+Plugin 'styled-components/vim-styled-components'
 "Plugin 'gfontenot/vim-xcode'
 "Plugin 'keith/swift.vim'
 
@@ -98,6 +99,9 @@ let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py']
+let NERDTreeHijackNetrw=1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
 
 " if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
 function! OpenNERDTree()
@@ -116,7 +120,7 @@ set encoding=utf-8
 set notermguicolors
 set autoindent
 let python_highlight_all=1
-syntax on   " enable syntax processing
+syntax enable   " enable syntax processing
 set number  "enable line numbers
 set cursorline          " highlight current line
 set showcmd     " show partial command
