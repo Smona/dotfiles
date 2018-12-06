@@ -26,6 +26,7 @@ Plugin 'tpope/vim-obsession'
 Plugin 'lifepillar/vim-mucomplete'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'w0rp/ale'
+Plugin 'tpope/vim-commentary'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -98,7 +99,7 @@ let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py']
+let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py', 'pdf']
 let NERDTreeHijackNetrw=1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
@@ -188,6 +189,7 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 
 nmap <C-p> :Buffers<CR>
 "nmap <Tab> :GFiles<CR>
+nnoremap <C-F> yiw:Ag <C-r>"
 
 " Automatically reload vimrc
 augroup myvimrchooks
