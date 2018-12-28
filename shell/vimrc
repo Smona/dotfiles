@@ -27,6 +27,7 @@ Plugin 'lifepillar/vim-mucomplete'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'w0rp/ale'
 Plugin 'tpope/vim-commentary'
+Plugin 'simeji/winresizer'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
