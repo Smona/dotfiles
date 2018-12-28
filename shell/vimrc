@@ -43,6 +43,7 @@ Plugin 'posva/vim-vue'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'styled-components/vim-styled-components'
+Plugin 'mustache/vim-mustache-handlebars'
 "Plugin 'gfontenot/vim-xcode'
 "Plugin 'keith/swift.vim'
 
@@ -100,7 +101,7 @@ let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py', 'pdf']
+let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py', 'pdf', 'scss', 'styl', 'hbs', 'tpl']
 let NERDTreeHijackNetrw=1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
