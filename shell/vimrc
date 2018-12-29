@@ -216,7 +216,12 @@ let g:airline_theme='deus'
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#branch#format = 2
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#branch#displayed_head_limit = 35
 
+let g:ale_lint_on_text_changed = 'normal'
 let g:ale_completion_enabled = 1
 let g:ale_linters = {'python': ['flake8'], 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
