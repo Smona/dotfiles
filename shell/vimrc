@@ -30,6 +30,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'simeji/winresizer'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'tpope/vim-surround'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
