@@ -28,6 +28,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'w0rp/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'simeji/winresizer'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -123,19 +125,27 @@ set encoding=utf-8
 set notermguicolors
 set autoindent
 let python_highlight_all=1
-syntax enable   " enable syntax processing
-set number  "enable line numbers
+syntax enable           " enable syntax processing
+
+" Use hybrid line numbers while editing file, and absolute otherwise
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 set cursorline          " highlight current line
-set showcmd     " show partial command
+set showcmd             " show partial command
 set showmatch           " highlight matching [{()}]
 set updatetime=100      " quicker updates for e.g. gitgutter
 set mouse=a             " enable mouse navigation
 
 " Indent Settings
-set tabstop=2       " number of visual spaces per TAB
-set softtabstop=2   " number of spaces in tab when editing
-set shiftwidth=2    " number of spaces when reindinting
-set expandtab       " tabs are spaces
+set tabstop=2           " number of visual spaces per TAB
+set softtabstop=2       " number of spaces in tab when editing
+set shiftwidth=2        " number of spaces when reindinting
+set expandtab           " tabs are spaces
 
 " Search Settings
 set incsearch           " search as characters are entered
@@ -227,3 +237,5 @@ autocmd FileType vue syntax sync fromstart
 " Refresh git gutter after commiting from fugitive
 autocmd BufWinLeave * GitGutterAll
 
+" Prevent delay when switching back to normal mode
+set timeoutlen=1000 ttimeoutlen=0
