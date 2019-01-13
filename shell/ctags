@@ -1,0 +1,5 @@
+--python-kinds=-i
+--languages=python
+--exclude=node_modules
+--exclude=env
+--exclude=lambda
