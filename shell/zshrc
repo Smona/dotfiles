@@ -4,13 +4,11 @@ export TERM="xterm-256color"
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
-  "/usr/bin"
+  "/usr/local/"
   "/usr/local/sbin"
   "/usr/local/git/bin"
-  "/usr/local/"
   "/usr/local/opt/coreutils/libexec/gnubin" # Add brew-installed GNU core utilities bin
   "/usr/local/mysql/bin"
-  "/sw/bin/"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
   "$HOME/.rvm/bin"

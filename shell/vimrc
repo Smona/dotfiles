@@ -31,10 +31,11 @@ Plugin 'simeji/winresizer'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'cespare/vim-toml'
@@ -125,6 +126,7 @@ au FocusGained,BufEnter * :checktime
 set encoding=utf-8
 set notermguicolors
 set autoindent
+set colorcolumn=120
 let python_highlight_all=1
 syntax enable           " enable syntax processing
 
@@ -219,15 +221,22 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#branch#format = 2
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_skip_empty_sections = 1
-let g:airline#extensions#branch#displayed_head_limit = 35
+let g:airline#extensions#branch#displayed_head_limit = 45
 
 let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 350
+let g:ale_lint_on_insert_leave = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'python': ['flake8'], 'vue': ['eslint', 'vls']}
+let g:ale_linters = {
+      \ 'python': ['flake8'],
+      \ 'scss': ['prettier', 'scss-lint'],
+      \ 'javascript': ['eslint', 'tslint'],
+      \ 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
       \ 'python': ['autopep8'],
-      \ 'javascript': ['eslint'], 
+      \ 'scss': ['prettier'],
+      \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint', 'tslint'],
       \ 'vue': ['eslint', 'trim_whitespace']}
 let g:ale_javascript_eslint_options = '--ext .js,.vue'
