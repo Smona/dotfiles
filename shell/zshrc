@@ -125,3 +125,4 @@ fpath=($fpath "/home/mason/.zfunctions")
 autoload -U promptinit; promptinit
 prompt spaceship
 
+fpath=($fpath "/home/mason/.zfunctions")

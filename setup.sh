@@ -290,7 +290,7 @@ main() {
     # . "$DOTFILES_DIR/install/brew-cask.sh"
 # fi
 
-
+sudo apt update
 main
 install_system_packages git
 
