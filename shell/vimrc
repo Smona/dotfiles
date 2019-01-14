@@ -32,6 +32,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'majutsushi/tagbar'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
