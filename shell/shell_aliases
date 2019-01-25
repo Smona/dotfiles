@@ -116,7 +116,7 @@ function git_list_branches() {
 # Git aliases
 # More Git tips http://firstaidgit.io/
 alias gss="git status -s"
-alias gp="git push origin HEAD"
+alias gp="git push -u origin HEAD"
 alias gpt="git push origin HEAD && git push --tags"
 alias wip="git commit -m'WIP' . && git push origin HEAD"
 alias grok="ngrok start rem.jsbin-dev.com static.rem.jsbin-dev.com learn.rem.jsbin-dev.com"
