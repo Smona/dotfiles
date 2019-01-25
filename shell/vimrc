@@ -33,6 +33,8 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -224,9 +226,7 @@ let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#branch#displayed_head_limit = 45
 
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_delay = 350
-let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_delay = 500
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
       \ 'python': ['flake8'],
@@ -255,3 +255,7 @@ autocmd BufWinLeave * GitGutterAll
 
 " Prevent delay when switching back to normal mode
 set timeoutlen=1000 ttimeoutlen=0
+
+" autochdir
+:autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
+:autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
