@@ -290,7 +290,11 @@ main() {
     # . "$DOTFILES_DIR/install/brew-cask.sh"
 # fi
 
-sudo apt update
+if [[ $platform == 'Linux' ]]; then
+  if [[ -f /etc/debian_version ]]; then
+    sudo apt update
+  fi
+fi
 main
 install_system_packages git
 
