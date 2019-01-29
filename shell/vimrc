@@ -35,6 +35,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'majutsushi/tagbar'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'melonmanchan/vim-tmux-resizer'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -129,7 +131,6 @@ au FocusGained,BufEnter * :checktime
 set encoding=utf-8
 set notermguicolors
 set autoindent
-set colorcolumn=120
 let python_highlight_all=1
 syntax enable           " enable syntax processing
 
@@ -159,11 +160,11 @@ set hlsearch            " highlight matches
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
-" Easier split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+let g:tmux_resizer_no_mappings = 1
+nnoremap <silent> ˙ :TmuxResizeLeft<cr>
+nnoremap <silent> ∆ :TmuxResizeDown<cr>
+nnoremap <silent> ˚ :TmuxResizeUp<cr>
+nnoremap <silent> ¬ :TmuxResizeRight<cr>
 
 " Always show statusline
 set laststatus=2
