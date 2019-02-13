@@ -37,6 +37,8 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'melonmanchan/vim-tmux-resizer'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'flazz/vim-colorschemes'
 
 " Language Support
 Plugin 'iloginow/vim-stylus'
@@ -69,10 +71,16 @@ filetype plugin indent on    " required
 " OTHER SETTINGS
 
 let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
-"autocmd BufEnter * silent! lcd %:p:h " automatically cds to whatever buffer i'm in
 
 :let mapleader = "-"
-colorscheme space-vim-dark
+
+" force truecolor on
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+let g:gruvbox_italic=1
+colorscheme gruvbox
+
 set splitbelow
 set splitright
 
@@ -104,16 +112,15 @@ let g:NERDTreeWinSize=50
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " NERDTree icon color performance hacks
-let NERDTreeHighlightCursorline = 0
-let g:NERDTreeDisableExactMatchHighlight = 1
-let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeSyntaxDisableDefaultExtensions = 1
-let g:NERDTreeDisableExactMatchHighlight = 1
-let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeSyntaxEnabledExtensions = ['vue', 'jsx', 'html', 'js', 'ts', 'css', 'json', 'env', 'yml', 'md', 'vim', 'yaml', 'py', 'pdf', 'scss', 'styl', 'hbs', 'tpl']
+" let g:NERDTreeSyntaxDisableDefaultExtensions = 1
+" let g:NERDTreeDisableExactMatchHighlight = 1
+" let g:NERDTreeDisablePatternMatchHighlight = 1
+let g:NERDTreeLimitedSyntax = 1
 let NERDTreeHijackNetrw=1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['vue'] = '4fc08d'
 
 " if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
 function! OpenNERDTree()
@@ -125,11 +132,14 @@ function! OpenNERDTree()
     endif
 endfunction
 
+" Close vim if the only remaining buffer is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " reload file if changed when changing buffers
 au FocusGained,BufEnter * :checktime
 
 set encoding=utf-8
-set notermguicolors
+
 set autoindent
 let python_highlight_all=1
 syntax enable           " enable syntax processing
@@ -188,6 +198,7 @@ set wildignore+=node_modules/*,bower_components/*
 
 " Buffers
 set hidden
+let g:buffergator_autoupdate=1
 
 " Shortcut to run current file
 nnoremap <leader>r :!%:p<Enter>
@@ -197,14 +208,14 @@ nnoremap <leader>r :!%:p<Enter>
 nmap <leader>T :enew<cr>
 
 " Move to the next buffer
-nmap <leader>- :bnext<CR>
+nmap <leader>n :bnext<CR>
 
 " Move to the previous buffer
-nmap <leader>h :bprevious<CR>
+nmap <leader>p :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nmap <leader>bq :bp <BAR> bd #<CR>
+nmap <leader>q :bp <BAR> bd #<CR>
 
 nmap <C-p> :Buffers<CR>
 "nmap <Tab> :GFiles<CR>
@@ -220,7 +231,8 @@ augroup END
 let g:airline_theme='deus'
 " let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'jsformatter'
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#branch#format = 2
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
@@ -231,13 +243,13 @@ let g:ale_lint_delay = 500
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
       \ 'python': ['flake8'],
-      \ 'scss': ['prettier', 'scss-lint'],
+      \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint', 'tslint'],
       \ 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
       \ 'python': ['autopep8'],
-      \ 'scss': ['prettier'],
+      \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint', 'tslint'],
       \ 'vue': ['eslint', 'trim_whitespace']}
@@ -254,9 +266,19 @@ autocmd FileType vue syntax sync fromstart
 " Refresh git gutter after commiting from fugitive
 autocmd BufWinLeave * GitGutterAll
 
+" My git aliases
+:command! Gc !git commit
+:command! Gp !git push -u origin HEAD
+:command! Gpu !git pull
+
 " Prevent delay when switching back to normal mode
 set timeoutlen=1000 ttimeoutlen=0
 
 " autochdir
 :autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
 :autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
+
+" Easytags
+let g:easytags_async=1
+
+set fillchars+=vert:│
