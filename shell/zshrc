@@ -103,3 +103,5 @@ autoload -U promptinit; promptinit
 prompt spaceship
 
 fpath=($fpath "/home/mason/.zfunctions")
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
