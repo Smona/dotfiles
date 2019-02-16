@@ -1,114 +1,211 @@
-" VUNDLE
+""""""""""""""""""""""""""
+"" Plugins
+""""""""""""""""""""""""""
+" Install vim-plug if necessary
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" fixes a bug with jedi
+" https://github.com/davidhalter/jedi-vim/issues/889#issuecomment-449547214
+:py3 sys.executable='/usr/local/bin/python3' 
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'kshenoy/vim-signature'          " marks in gutter plugin
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'liuchengxu/space-vim-dark'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plugin 'junegunn/fzf.vim'
-Plugin 'EinfachToll/DidYouMean'
-Plugin 'tpope/vim-obsession'
-Plugin 'lifepillar/vim-mucomplete'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-commentary'
-Plugin 'simeji/winresizer'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'tmux-plugins/vim-tmux-focus-events'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'majutsushi/tagbar'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'melonmanchan/vim-tmux-resizer'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'flazz/vim-colorschemes'
-
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'kshenoy/vim-signature'          " marks in gutter plugin
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'EinfachToll/DidYouMean'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-unimpaired'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-commentary'
+Plug 'simeji/winresizer'
+Plug 'easymotion/vim-easymotion'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'majutsushi/tagbar'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'melonmanchan/vim-tmux-resizer'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'flazz/vim-colorschemes'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'davidhalter/jedi-vim'
+Plug 'zchee/deoplete-jedi', { 'do': 'pip3 install jedi' }
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-dispatch'
+Plug 'janko/vim-test'
 " Language Support
-Plugin 'iloginow/vim-stylus'
-" Plugin 'davidhalter/jedi-vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'cespare/vim-toml'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'othree/html5.vim'
-Plugin 'posva/vim-vue'
-" TODO: these are both typescript plugins, should probably get rid of one
-Plugin 'leafgarland/typescript-vim'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'styled-components/vim-styled-components'
-Plugin 'mustache/vim-mustache-handlebars'
-"Plugin 'gfontenot/vim-xcode'
-"Plugin 'keith/swift.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'styled-components/vim-styled-components'
+"Plug 'gfontenot/vim-xcode'
+call plug#end()
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
 
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-" OTHER SETTINGS
-
-let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
-
+""""""""""""""""""""""""""
+"" Settings
+""""""""""""""""""""""""""
+set nocompatible              " be iMproved
 :let mapleader = "-"
 
-" force truecolor on
+set splitbelow
+set splitright
+
+set encoding=utf-8
+set autoindent
+
+set updatetime=100      " quicker updates for e.g. gitgutter
+set mouse=a             " enable mouse navigation
+
+" Indent Settings
+set tabstop=2           " number of visual spaces per TAB
+set softtabstop=2       " number of spaces in tab when editing
+set shiftwidth=2        " number of spaces when reindinting
+set expandtab           " tabs are spaces
+
+" Search Settings
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+" turn off search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+
+set t_Co=256            " Use 256 colours always
+
+" Folding settings
+set foldenable          " enable folding
+set foldlevelstart=10   " open most folds by default
+set foldmethod=indent   " fold based on indent level
+" space open/closes folds
+nnoremap <space> za
+
+" wildmenu
+set wildmenu
+set wildmode=longest:full,full
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+set wildignore+=*.pdf,*.psd
+set wildignore+=node_modules/*,bower_components/*
+
+
+""""""""""""""""""""""""""
+"" Autocomplete
+""""""""""""""""""""""""""
+set completeopt=longest,menuone
+set belloff+=ctrlg
+set shortmess+=c   " Shut off completion messages
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#case_insensitive = 1
+let g:deoplete#sources#ternjs#docs = 1
+"Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+                \ 'jsx',
+                \ 'javascript.jsx',
+                \ 'vue',
+                \ ]
+" Use tern_for_vim.
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+let g:tern#is_show_argument_hints_enabled = 1
+
+
+""""""""""""""""""""""""""
+"" Appearance
+""""""""""""""""""""""""""
+syntax enable           " enable syntax processing
+" let python_highlight_all=1
+
+set laststatus=2        " Always show statusline
+set cursorline          " highlight current line
+set showcmd             " show partial command
+set showmatch           " highlight matching [{()}]
+set fillchars+=vert:│   " smoother vertical separator
+
+" Use hybrid line numbers while editing file, and absolute otherwise
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+" Theme choice, with optimizations for gruvbox
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
 let g:gruvbox_italic=1
 colorscheme gruvbox
 
-set splitbelow
-set splitright
+" Airline
+let g:airline_theme='deus'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#branch#format = 2
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#branch#displayed_head_limit = 45
 
-let g:ctrlp_map = '<Tab>'
-let g:ctrlp_cmd = 'CtrlPMixed'
+
+""""""""""""""""""""""""""
+"" Navigation
+""""""""""""""""""""""""""
+set hidden              " Allow hiding unsaved buffers
+let g:buffergator_autoupdate=1
+" reload file if changed when changing buffers
+au FocusGained,BufEnter * :checktime
+
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-" MUComplete
-set completeopt=longest,menuone
-set completeopt+=noselect
-set completeopt+=noinsert
-let g:mucomplete#enable_auto_at_startup = 1
-set shortmess+=c   " Shut off completion messages
-autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-autocmd FileType typescript nmap <buffer> <Leader>d <C-]>
-autocmd FileType javascript nmap <buffer> <Leader>d :ALEGoToDefinition<CR>
+let g:tmux_resizer_no_mappings = 1
+nnoremap <silent> ˙ :TmuxResizeLeft<cr>
+nnoremap <silent> ∆ :TmuxResizeDown<cr>
+nnoremap <silent> ˚ :TmuxResizeUp<cr>
+nnoremap <silent> ¬ :TmuxResizeRight<cr>
 
-""" -------------------- NERDTree CONFIG -------------------------
-" nerd tree opens files in different tabs
-" let g:NERDTreeMapOpenInTab='<ENTER>'
+" Shortcut to run current file
+nnoremap <leader>r :!%:p<Enter>
 
-" start NERDTree automatically on startup
-" autocmd vimenter * NERDTree
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>q :bp <BAR> bd #<CR>
+
+" nmap <C-p> :Buffers<CR>
+"nmap <Tab> :GFiles<CR>
+nnoremap <C-F> yiw:Ag <C-r>"
 
 map <C-n> :call OpenNERDTree()<CR>
 "let g:NERDTreeDirArrows=0
-let g:NERDTreeWinSize=50
+let g:NERDTreeWinSize=35
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " NERDTree icon color performance hacks
@@ -135,116 +232,24 @@ endfunction
 " Close vim if the only remaining buffer is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" reload file if changed when changing buffers
-au FocusGained,BufEnter * :checktime
-
-set encoding=utf-8
-
-set autoindent
-let python_highlight_all=1
-syntax enable           " enable syntax processing
-
-" Use hybrid line numbers while editing file, and absolute otherwise
-set number relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
-
-set cursorline          " highlight current line
-set showcmd             " show partial command
-set showmatch           " highlight matching [{()}]
-set updatetime=100      " quicker updates for e.g. gitgutter
-set mouse=a             " enable mouse navigation
-
-" Indent Settings
-set tabstop=2           " number of visual spaces per TAB
-set softtabstop=2       " number of spaces in tab when editing
-set shiftwidth=2        " number of spaces when reindinting
-set expandtab           " tabs are spaces
-
-" Search Settings
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
-" turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
-
-let g:tmux_resizer_no_mappings = 1
-nnoremap <silent> ˙ :TmuxResizeLeft<cr>
-nnoremap <silent> ∆ :TmuxResizeDown<cr>
-nnoremap <silent> ˚ :TmuxResizeUp<cr>
-nnoremap <silent> ¬ :TmuxResizeRight<cr>
-
-" Always show statusline
-set laststatus=2
-
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-
-" Folding settings
-set foldenable          " enable folding
-set foldlevelstart=10   " open most folds by default
-set foldmethod=indent   " fold based on indent level
-" space open/closes folds
-nnoremap <space> za
-
-" wildmenu
-set wildmenu
-set wildmode=longest:full,full
-set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
-set wildignore+=*.pdf,*.psd
-set wildignore+=node_modules/*,bower_components/*
-
-" Buffers
-set hidden
-let g:buffergator_autoupdate=1
-
-" Shortcut to run current file
-nnoremap <leader>r :!%:p<Enter>
-
-" To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nmap <leader>T :enew<cr>
-
-" Move to the next buffer
-nmap <leader>n :bnext<CR>
-
-" Move to the previous buffer
-nmap <leader>p :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nmap <leader>q :bp <BAR> bd #<CR>
-
-nmap <C-p> :Buffers<CR>
-"nmap <Tab> :GFiles<CR>
-nnoremap <C-F> yiw:Ag <C-r>"
-
 " Automatically reload vimrc
 augroup myvimrchooks
     au!
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
-""""" Airline
-let g:airline_theme='deus'
-" let g:airline_solarized_bg='dark'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'jsformatter'
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#branch#format = 2
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_skip_empty_sections = 1
-let g:airline#extensions#branch#displayed_head_limit = 45
 
+""""""""""""""""""""""""""
+"" Linting
+""""""""""""""""""""""""""
+
+" let g:ale_lint_on_text_changed = 'never'  " Only lint on save
 let g:ale_lint_delay = 500
-let g:ale_completion_enabled = 1
+let g:ale_lint_on_enter = 0                 " Speeds up buffer switching a lot
 let g:ale_linters = {
       \ 'python': ['flake8'],
       \ 'scss': ['stylelint'],
-      \ 'javascript': ['eslint', 'tslint'],
+      \ 'javascript': ['eslint'],
       \ 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
@@ -263,16 +268,21 @@ hi Normal ctermbg=NONE guibg=NONE
 " time
 autocmd FileType vue syntax sync fromstart
 
+
+""""""""""""""""""""""""""
+"" Git
+""""""""""""""""""""""""""
 " Refresh git gutter after commiting from fugitive
-autocmd BufWinLeave * GitGutterAll
+" autocmd BufWinLeave * GitGutterAll
 
 " My git aliases
 :command! Gc !git commit
 :command! Gp !git push -u origin HEAD
 :command! Gpu !git pull
 
-" Prevent delay when switching back to normal mode
-set timeoutlen=1000 ttimeoutlen=0
+
+set timeoutlen=1000 ttimeoutlen=0    " Prevent delay when switching back to normal mode
+let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
 
 " autochdir
 :autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
@@ -280,5 +290,27 @@ set timeoutlen=1000 ttimeoutlen=0
 
 " Easytags
 let g:easytags_async=1
+let g:easytags_auto_highlight = 0
 
-set fillchars+=vert:│
+
+""""""""""""""""""""""""""
+"" Integrated Testing
+""""""""""""""""""""""""""
+" make test commands execute using dispatch.vim
+let test#strategy = "dispatch"
+
+" Mineralsoft-specific configs
+function! DockerTransform(cmd)
+  return 'docker-compose exec -T django ' . a:cmd
+endfunction
+let test#python#runner = 'djangotest'
+let g:test#custom_transformations = { 'docker': function('DockerTransform') }
+let g:test#transformation = 'docker'
+let test#python#djangotest#executable = 'python3 ./manage.py test'
+
+" Keymaps
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
