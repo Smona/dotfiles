@@ -4,7 +4,7 @@
 # For a full list of active aliases, run `alias`.
 
 # Enable aliases to be sudo’ed
-alias sudo="sudo "
+# alias sudo="sudo "
 
 # Shortcuts
 alias o="open"

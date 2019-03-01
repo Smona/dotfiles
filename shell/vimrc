@@ -1,4 +1,17 @@
 """"""""""""""""""""""""""
+"" Table of contents
+""""""""""""""""""""""""""
+" Plugins
+" Settings
+" Appearance
+" Navigation
+" Autocomplete
+" Linting
+" Git
+" Testing
+
+
+""""""""""""""""""""""""""
 "" Plugins
 """"""""""""""""""""""""""
 " Install vim-plug if necessary
@@ -13,7 +26,6 @@ endif
 :py3 sys.executable='/usr/local/bin/python3' 
 
 call plug#begin('~/.vim/plugged')
-Plug 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -56,6 +68,9 @@ Plug 'zchee/deoplete-jedi', { 'do': 'pip3 install jedi' }
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-dispatch'
 Plug 'janko/vim-test'
+Plug 'Yggdroot/indentLine'
+Plug 'goldfeld/ctrlr.vim'
+Plug 'adelarsq/vim-matchit'
 " Language Support
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components'
@@ -77,6 +92,7 @@ set autoindent
 
 set updatetime=100      " quicker updates for e.g. gitgutter
 set mouse=a             " enable mouse navigation
+set autowrite
 
 " Indent Settings
 set tabstop=2           " number of visual spaces per TAB
@@ -87,6 +103,8 @@ set expandtab           " tabs are spaces
 " Search Settings
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
+set ignorecase
+set smartcase
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
@@ -106,6 +124,11 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
 set wildignore+=node_modules/*,bower_components/*
 
+" speed optimizations
+set ttyfast
+set lazyredraw
+
+abbrev pdb __import__('pdb').set_trace()
 
 """"""""""""""""""""""""""
 "" Autocomplete
@@ -115,6 +138,7 @@ set belloff+=ctrlg
 set shortmess+=c   " Shut off completion messages
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('auto_complete_delay', 400)
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#case_insensitive = 1
 let g:deoplete#sources#ternjs#docs = 1
@@ -137,18 +161,20 @@ syntax enable           " enable syntax processing
 " let python_highlight_all=1
 
 set laststatus=2        " Always show statusline
-set cursorline          " highlight current line
+" set cursorline          " highlight current line
 set showcmd             " show partial command
 set showmatch           " highlight matching [{()}]
 set fillchars+=vert:│   " smoother vertical separator
+let g:indentLine_char = '┆'
 
 " Use hybrid line numbers while editing file, and absolute otherwise
-set number relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+" NOTE: disabled to improve performance
+set number " relativenumber
+" augroup numbertoggle
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" augroup END
 
 " Theme choice, with optimizations for gruvbox
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
@@ -182,12 +208,21 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_use_caching = 0
 
 let g:tmux_resizer_no_mappings = 1
 nnoremap <silent> ˙ :TmuxResizeLeft<cr>
 nnoremap <silent> ∆ :TmuxResizeDown<cr>
 nnoremap <silent> ˚ :TmuxResizeUp<cr>
 nnoremap <silent> ¬ :TmuxResizeRight<cr>
+
+autocmd FileType javascript nmap <buffer> <Leader>d :TernDef<CR>
+autocmd FileType javascript nmap <buffer> <Leader>n :TernRefs<CR>
+autocmd FileType javascript nmap <buffer> <Leader>r :TernRename<CR>
+
+nmap <F3> :TagbarToggle<CR>
+map <F2> :call OpenNERDTree()<CR>
+map <C-n> :call OpenNERDTree()<CR>
 
 " Shortcut to run current file
 nnoremap <leader>r :!%:p<Enter>
@@ -199,16 +234,21 @@ nmap <leader>T :enew<cr>
 " This replicates the idea of closing a tab
 nmap <leader>q :bp <BAR> bd #<CR>
 
-" nmap <C-p> :Buffers<CR>
-"nmap <Tab> :GFiles<CR>
+" Codebase text search
 nnoremap <C-F> yiw:Ag <C-r>"
+vnoremap <C-F> y:Ag <C-r>"<CR>
 
-map <C-n> :call OpenNERDTree()<CR>
+" make command line more bash-like
+cnoremap <C-P> <UP>
+cnoremap <C-N> <DOWN>
+cnoremap <C-A> <Home>
+
 "let g:NERDTreeDirArrows=0
 let g:NERDTreeWinSize=35
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " NERDTree icon color performance hacks
+let g:NERDTreeHighlightCursorline = 0
 " let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 " let g:NERDTreeDisableExactMatchHighlight = 1
 " let g:NERDTreeDisablePatternMatchHighlight = 1
@@ -239,13 +279,14 @@ augroup myvimrchooks
 augroup END
 
 
-""""""""""""""""""""""""""
-"" Linting
-""""""""""""""""""""""""""
+"""""""""""""""""""""""""
+" Linting
+"""""""""""""""""""""""""
 
-" let g:ale_lint_on_text_changed = 'never'  " Only lint on save
-let g:ale_lint_delay = 500
-let g:ale_lint_on_enter = 0                 " Speeds up buffer switching a lot
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 1
+" let g:ale_lint_on_save = 0
+" let g:ale_lint_delay = 1000
 let g:ale_linters = {
       \ 'python': ['flake8'],
       \ 'scss': ['stylelint'],
@@ -291,22 +332,22 @@ let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutte
 " Easytags
 let g:easytags_async=1
 let g:easytags_auto_highlight = 0
+let g:easytags_languages = {
+      \   'javascript': {
+      \       'cmd': 'jsctags',
+      \       'recurse_flag': ''
+      \   },
+      \   'python': {
+      \       'cmd': 'ctags',
+      \   }
+      \}
 
 
 """"""""""""""""""""""""""
-"" Integrated Testing
+"" Testing
 """"""""""""""""""""""""""
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
-
-" Mineralsoft-specific configs
-function! DockerTransform(cmd)
-  return 'docker-compose exec -T django ' . a:cmd
-endfunction
-let test#python#runner = 'djangotest'
-let g:test#custom_transformations = { 'docker': function('DockerTransform') }
-let g:test#transformation = 'docker'
-let test#python#djangotest#executable = 'python3 ./manage.py test'
 
 " Keymaps
 nmap <silent> t<C-n> :TestNearest<CR>
@@ -314,3 +355,8 @@ nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
+
+" directory-local settings
+if filereadable(".smona.vimrc")
+  source .smona.vimrc
+endif
