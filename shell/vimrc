@@ -69,11 +69,11 @@ Plug 'ervandew/supertab'
 Plug 'tpope/vim-dispatch'
 Plug 'janko/vim-test'
 Plug 'Yggdroot/indentLine'
-Plug 'goldfeld/ctrlr.vim'
 Plug 'adelarsq/vim-matchit'
 " Language Support
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components'
+Plug 'hail2u/vim-css3-syntax'
 "Plug 'gfontenot/vim-xcode'
 call plug#end()
 
@@ -159,6 +159,7 @@ let g:tern#is_show_argument_hints_enabled = 1
 """"""""""""""""""""""""""
 syntax enable           " enable syntax processing
 " let python_highlight_all=1
+let g:vue_disable_pre_processors=1  " Fix slow performance of vue syntax highlighting
 
 set laststatus=2        " Always show statusline
 " set cursorline          " highlight current line
@@ -291,14 +292,14 @@ let g:ale_linters = {
       \ 'python': ['flake8'],
       \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
-      \ 'vue': ['eslint', 'vls']}
+      \ 'vue': ['vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
       \ 'python': ['autopep8'],
       \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint', 'tslint'],
-      \ 'vue': ['eslint', 'trim_whitespace']}
+      \ 'vue': ['eslint']}
 let g:ale_javascript_eslint_options = '--ext .js,.vue'
 
 let g:javascript_plugin_jsdoc = 1
@@ -307,7 +308,7 @@ hi Normal ctermbg=NONE guibg=NONE
 
 " Automatically refresh vue syntax highlighting to make sure it works every
 " time
-autocmd FileType vue syntax sync fromstart
+" autocmd FileType vue syntax sync fromstart
 
 
 """"""""""""""""""""""""""
