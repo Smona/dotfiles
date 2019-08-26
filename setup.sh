@@ -296,7 +296,7 @@ if [[ $platform == 'Linux' ]]; then
   fi
 fi
 main
-install_system_packages git
+install_system_packages 'git hub'
 
 ###############################################################################
 # Zsh                                                                         #
@@ -356,12 +356,13 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ###############################################################################
 
 # Install nvm and Node
-mkdir ~/.nvm
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-nvm install node
+install_system_packages nodejs
+npm i -g n
+n lts
+npm i -g yarn
 
 # install spaceship theme
-npm i -g spaceship-prompt
+yarn global add spaceship-prompt
 
 # Setup python
 install_system_packages "python-pip python3-pip"

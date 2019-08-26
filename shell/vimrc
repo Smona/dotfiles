@@ -26,18 +26,23 @@ endif
 :py3 sys.executable='/usr/local/bin/python3' 
 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
+Plug 'kristijanhusak/vim-dirvish-git'
+" Plug 'ipod825/vim-netranger'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'kshenoy/vim-signature'          " marks in gutter plugin
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'EinfachToll/DidYouMean'
+Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
@@ -47,6 +52,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
 Plug 'majutsushi/tagbar'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
@@ -62,18 +68,22 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc', { 'do': 'pip3 install pynvim' }
 endif
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 Plug 'davidhalter/jedi-vim'
 Plug 'zchee/deoplete-jedi', { 'do': 'pip3 install jedi' }
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-dispatch'
 Plug 'janko/vim-test'
-Plug 'Yggdroot/indentLine'
-Plug 'adelarsq/vim-matchit'
+Plug 'wakatime/vim-wakatime'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-eunuch'
+Plug 'pbrisbin/vim-mkdir'
+" Plug 'Yggdroot/indentLine'
+" Plug 'adelarsq/vim-matchit'
 " Language Support
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components'
-Plug 'hail2u/vim-css3-syntax'
+Plug 'burner/vim-svelte'
 "Plug 'gfontenot/vim-xcode'
 call plug#end()
 
@@ -82,7 +92,7 @@ call plug#end()
 "" Settings
 """"""""""""""""""""""""""
 set nocompatible              " be iMproved
-:let mapleader = "-"
+:let mapleader = ","
 
 set splitbelow
 set splitright
@@ -92,7 +102,6 @@ set autoindent
 
 set updatetime=100      " quicker updates for e.g. gitgutter
 set mouse=a             " enable mouse navigation
-set autowrite
 
 " Indent Settings
 set tabstop=2           " number of visual spaces per TAB
@@ -107,6 +116,7 @@ set ignorecase
 set smartcase
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
+inoremap <C-c> <Esc>
 
 set t_Co=256            " Use 256 colours always
 
@@ -115,7 +125,7 @@ set foldenable          " enable folding
 set foldlevelstart=10   " open most folds by default
 set foldmethod=indent   " fold based on indent level
 " space open/closes folds
-nnoremap <space> za
+" nnoremap <space> za
 
 " wildmenu
 set wildmenu
@@ -125,20 +135,28 @@ set wildignore+=*.pdf,*.psd
 set wildignore+=node_modules/*,bower_components/*
 
 " speed optimizations
-set ttyfast
-set lazyredraw
+" set ttyfast
+" set lazyredraw
 
 abbrev pdb __import__('pdb').set_trace()
 
 """"""""""""""""""""""""""
 "" Autocomplete
 """"""""""""""""""""""""""
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
 set belloff+=ctrlg
 set shortmess+=c   " Shut off completion messages
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabLongestEnhanced = 1
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, '<c-n>') |
+  \ endif
 let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('auto_complete_delay', 400)
+"call deoplete#custom#option('auto_complete_delay', 400)
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#case_insensitive = 1
 let g:deoplete#sources#ternjs#docs = 1
@@ -152,6 +170,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 let g:tern#is_show_argument_hints_enabled = 1
+let g:tern_show_signature_in_pum = 1
 
 
 """"""""""""""""""""""""""
@@ -160,6 +179,7 @@ let g:tern#is_show_argument_hints_enabled = 1
 syntax enable           " enable syntax processing
 " let python_highlight_all=1
 let g:vue_disable_pre_processors=1  " Fix slow performance of vue syntax highlighting
+set redrawtime=5000     " allow highlighting of huge .py files
 
 set laststatus=2        " Always show statusline
 " set cursorline          " highlight current line
@@ -196,6 +216,8 @@ let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#branch#displayed_head_limit = 45
 
+let g:jedi#show_call_signatures = 2
+set noshowmode
 
 """"""""""""""""""""""""""
 "" Navigation
@@ -203,13 +225,15 @@ let g:airline#extensions#branch#displayed_head_limit = 45
 set hidden              " Allow hiding unsaved buffers
 let g:buffergator_autoupdate=1
 " reload file if changed when changing buffers
-au FocusGained,BufEnter * :checktime
+au FocusGained,BufEnter * silent! :checktime
 
 let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
 let g:ctrlp_by_filename = 0
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_use_caching = 0
+let g:ctrlp_user_command = ['.git', 'git ls-files -co --exclude-standard %s']
+let g:ctrlp_use_caching = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
+let g:ctrlp_lazy_update = 100
 
 let g:tmux_resizer_no_mappings = 1
 nnoremap <silent> ˙ :TmuxResizeLeft<cr>
@@ -222,8 +246,8 @@ autocmd FileType javascript nmap <buffer> <Leader>n :TernRefs<CR>
 autocmd FileType javascript nmap <buffer> <Leader>r :TernRename<CR>
 
 nmap <F3> :TagbarToggle<CR>
-map <F2> :call OpenNERDTree()<CR>
-map <C-n> :call OpenNERDTree()<CR>
+map <C-n> :20Lex<CR>
+let g:ranger_replace_netrw = 1
 
 " Shortcut to run current file
 nnoremap <leader>r :!%:p<Enter>
@@ -233,7 +257,7 @@ nnoremap <leader>r :!%:p<Enter>
 nmap <leader>T :enew<cr>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nmap <leader>q :bp <BAR> bd #<CR>
+nmap <leader>q :bd<CR>
 
 " Codebase text search
 nnoremap <C-F> yiw:Ag <C-r>"
@@ -245,33 +269,23 @@ cnoremap <C-N> <DOWN>
 cnoremap <C-A> <Home>
 
 "let g:NERDTreeDirArrows=0
-let g:NERDTreeWinSize=35
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+" let g:NERDTreeWinSize=35
+" let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " NERDTree icon color performance hacks
-let g:NERDTreeHighlightCursorline = 0
+" let g:NERDTreeHighlightCursorline = 0
 " let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 " let g:NERDTreeDisableExactMatchHighlight = 1
 " let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeLimitedSyntax = 1
-let NERDTreeHijackNetrw=1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor['vue'] = '4fc08d'
-
-" if NERDTreeTab is open --> NERDTreeToggle, else NERDTreeFind
-function! OpenNERDTree()
-    if exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-        NERDTreeToggle
-    else
-        " finds currently open file in NERDTree
-        NERDTreeFind
-    endif
-endfunction
+" let g:NERDTreeLimitedSyntax = 1
+" let NERDTreeHijackNetrw=1
+" let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" let g:DevIconsEnableFoldersOpenClose = 1
+" let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreeExtensionHighlightColor['vue'] = '4fc08d'
 
 " Close vim if the only remaining buffer is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Automatically reload vimrc
 augroup myvimrchooks
@@ -285,14 +299,16 @@ augroup END
 """""""""""""""""""""""""
 
 " let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_insert_leave = 1
-" let g:ale_lint_on_save = 0
+" let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_save = 0
 " let g:ale_lint_delay = 1000
+let g:ale_completion_enabled = 1
 let g:ale_linters = {
       \ 'python': ['flake8'],
       \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
-      \ 'vue': ['vls']}
+      \ 'typescript': ['eslint'],
+      \ 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
       \ 'python': ['autopep8'],
@@ -318,17 +334,53 @@ hi Normal ctermbg=NONE guibg=NONE
 " autocmd BufWinLeave * GitGutterAll
 
 " My git aliases
-:command! Gc !git commit
-:command! Gp !git push -u origin HEAD
-:command! Gpu !git pull
+command! GC :!git commit<CR>
+command! GP :!git push -u origin HEAD<CR>
+command! GPU :!git pull<CR>
 
+nnoremap <leader>s :Spread<CR>
+command! Spread call ToggleSpread()
+function! ToggleSpread()
+  silent normal va{
+  if (line('.') - line('v') > 0)
+    normal v
+    call Collapse()
+  else
+    normal v
+    call Spread()
+  endif
+endfunction
+
+function! Spread()
+  s/ \+\(\w\+\),\?\([^{]*}\)\@=/\r\1,/g
+  s/ }/\r}
+  normal va{=
+endfunction
+
+" function! Collapse()
+"   normal va{k
+"   " '<,'>s/\n *//
+"   '<,'>s/,\n \+/, /
+"   " s/\([{,]\) \+/\1 /g
+"   s/, }/ }/
+"   '<,'>s/{\n \+/{ /
+"   normal v
+" endfunction
 
 set timeoutlen=1000 ttimeoutlen=0    " Prevent delay when switching back to normal mode
 let g:SignatureMarkTextHLDynamic = 1 " changes mark color according to git-gutter
 
+let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_sign_removed_first_line = '┬'
+let g:gitgutter_sign_added =  '▌'
+let g:gitgutter_sign_modified = '▌'
+let g:gitgutter_sign_removed = '▌'
+let g:gitgutter_sign_modified_removed = '▌'
+highlight link DiffText GitGutterChangeDelete
 " autochdir
-:autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
-:autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
+" disabed because it was corrupting the cwd
+" :autocmd InsertEnter * let b:save_cwd = getcwd() | set autochdir
+" :autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(b:save_cwd)
 
 " Easytags
 let g:easytags_async=1

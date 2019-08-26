@@ -12,7 +12,6 @@ alias oo="open ."
 alias e="$EDITOR"
 alias g="git"
 alias v="vim"
-alias gh="github"
 alias rm="trash"
 alias C="Code.exe"
 alias x+="chmod +x"
@@ -41,14 +40,6 @@ alias trimcopy="tr -d '\n' | pbcopy"
 
 alias cask='brew cask' # i <3 u cask
 alias where=which # sometimes i forget
-alias brwe=brew  #typos
-
-# Vagrant aliases
-alias vag='vagrant'
-alias vagup='vagrant up'
-alias vagdestroy='vagrant destroy'
-alias vagssh='vagrant ssh'
-alias vaghalt='vagrant halt'
 
 # Be nice
 alias htop='sudo htop'
@@ -115,6 +106,7 @@ function git_list_branches() {
 
 # Git aliases
 # More Git tips http://firstaidgit.io/
+alias git="hub"
 alias gss="git status -s"
 alias gp="git push -u origin HEAD"
 alias gpt="git push origin HEAD && git push --tags"
