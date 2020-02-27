@@ -79,6 +79,9 @@ install_system_packages() {
     if [[ -f /etc/redhat-release ]]; then
       sudo yum install $1
     fi
+    if [ -f "/etc/arch-release" ]; then
+      sudo pacman -S $1
+    fi
     if [[ -f /etc/debian_version ]]; then
       sudo apt install $1 -y
     fi
