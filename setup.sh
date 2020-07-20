@@ -80,7 +80,7 @@ install_system_packages() {
       sudo yum install $1
     fi
     if [ -f "/etc/arch-release" ]; then
-      sudo pacman -S $1
+      sudo pacman -S --needed --noconfirm $1
     fi
     if [[ -f /etc/debian_version ]]; then
       sudo apt install $1 -y
@@ -311,7 +311,7 @@ if [ ! -f /bin/zsh -o ! -f /usr/bin/zsh ]; then
 fi
 
 # Set the default shell to zsh if it isn't currently set to zsh
-if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+if [[ ! $(echo $SHELL) == *"zsh"* ]]; then
   chsh -s $(which zsh)
 fi
 
@@ -359,9 +359,10 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ###############################################################################
 
 # Install nvm and Node
-install_system_packages nodejs
-npm i -g n
-n lts
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm install node
+nvm use node
 npm i -g yarn
 
 # install spaceship theme
@@ -379,4 +380,10 @@ install_system_packages vim
 
 # Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+# Install fasd
+install_system_packages fasd
+
+# Switch caps lock and escape
+setxkbmap -option caps:escape
 
