@@ -195,7 +195,7 @@
         diffFilter = delta --color-only
 
 [delta]
-        syntax-theme = dark
+        syntax-theme = Dracula
 
 [diff "bin"]
         # Use `hexdump` to diff binary files
