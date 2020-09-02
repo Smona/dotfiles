@@ -66,7 +66,7 @@ export CLICOLOR_FORCE=1
 alias l="ls -lF ${colorflag}"
 
 # ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
-alias ls='ls -AFh ${colorflag} --group-directories-first'
+alias ls='exa -Fh ${colorflag} --group-directories-first'
 
 # List all files colorized in long format, including dot files
 alias la="ls -la ${colorflag}"
@@ -204,7 +204,7 @@ alias dcl="docker-compose logs -f"
 alias dcr="docker-compose restart"
 
 # fasd
-alias z='fasd_cd -d'     # cd, same functionality as j in autojump
+# alias z='fasd -d'     # cd, same functionality as j in autojump
 
 # force TERM over ssh
 alias ssh='TERM=xterm-256color ssh'

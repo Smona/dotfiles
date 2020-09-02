@@ -80,7 +80,7 @@ install_system_packages() {
       sudo yum install $1
     fi
     if [ -f "/etc/arch-release" ]; then
-      sudo pacman -S --needed --noconfirm $1
+      yay -S --needed --noconfirm $1
     fi
     if [[ -f /etc/debian_version ]]; then
       sudo apt install $1 -y
@@ -387,3 +387,12 @@ install_system_packages fasd
 # Switch caps lock and escape
 setxkbmap -option caps:escape
 
+# Install docker
+install_system_packages docker
+install_system_packages docker-compose
+sudo usermod -aG docker $USER
+
+#install rust utilities
+install_system_packages exa
+install_system_packages zoxide
+install_system_packages bat

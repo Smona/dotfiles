@@ -52,7 +52,7 @@ unset file;
 auto-ls () {
   emulate -L zsh;
   # explicit sexy ls'ing as aliases arent honored in here.
-  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
+  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || exa
 }
 chpwd_functions=( auto-ls $chpwd_functions )
 
@@ -96,3 +96,6 @@ fpath=($fpath "/home/smona/.zfunctions")
 fpath=($fpath "/home/smona/.zfunctions")
 fpath=($fpath "/home/smona/.zfunctions")
 fpath=($fpath "/home/smona/.zfunctions")
+
+# activate zoxide
+eval "$(zoxide init zsh)"

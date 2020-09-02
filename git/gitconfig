@@ -189,11 +189,13 @@
         autocrlf = input
         mergeoptions = --no-edit
         ignorecase = false
+        pager = delta
 
-[pager]
-        # Insanely beautiful diffs ==> npm install -g diff-so-fancy
-        #diff = diff-so-fancy | less --tabs=4 -RFX
-        show = diff-so-fancy | less --tabs=4 -RFX
+[interactive]
+        diffFilter = delta --color-only
+
+[delta]
+        syntax-theme = dark
 
 [diff "bin"]
         # Use `hexdump` to diff binary files
