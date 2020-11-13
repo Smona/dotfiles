@@ -196,6 +196,7 @@
 
 [delta]
         syntax-theme = Dracula
+        features = side-by-side line-numbers decorations
 
 [diff "bin"]
         # Use `hexdump` to diff binary files
