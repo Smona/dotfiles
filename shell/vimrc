@@ -55,7 +55,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'majutsushi/tagbar'
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
+" Plug 'xolox/vim-easytags'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'melonmanchan/vim-tmux-resizer'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -304,14 +304,14 @@ let g:ale_lint_on_save = 0
 " let g:ale_lint_delay = 1000
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
-      \ 'python': ['flake8'],
+      \ 'python': ['black'],
       \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint'],
       \ 'vue': ['eslint', 'vls']}
 let g:ale_fixers = {
       \ '*': ['trim_whitespace'],
-      \ 'python': ['autopep8'],
+      \ 'python': ['black'],
       \ 'scss': ['stylelint'],
       \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint', 'tslint'],
