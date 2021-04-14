@@ -63,7 +63,7 @@ fi
 export CLICOLOR_FORCE=1
 
 # List all files colorized in long format
-alias l="ls -lF ${colorflag}"
+alias l="exa -lF ${colorflag}"
 
 # ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
 alias ls='exa -Fh ${colorflag} --group-directories-first'
@@ -145,8 +145,8 @@ alias gist-paste="gist --private --copy --paste --filename"  # gist-paste filena
 alias gist-file="gist --private --copy"  # gist-file filename.ext -- create private Gist from a file
 
 # Networking. IP address, dig, DNS
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias dig="dig +nocmd any +multiline +noall +answer"
+# alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+# alias dig="dig +nocmd any +multiline +noall +answer"
 
 # View HTTP traffic
 alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
